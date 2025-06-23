@@ -35,9 +35,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
     private GameSettings m_gameSettings;
 
+    [SerializeField]
+    private GamePrefabs m_gamePrefabs;
+    public static GamePrefabs GamePrefabs;
 
     private BoardController m_boardController;
 
@@ -47,9 +49,13 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        Application.targetFrameRate = 60;
+
         State = eStateGame.SETUP;
 
         m_gameSettings = Resources.Load<GameSettings>(Constants.GAME_SETTINGS_PATH);
+        
+        GameManager.GamePrefabs = m_gamePrefabs;
 
         m_uiMenu = FindObjectOfType<UIMainManager>();
         m_uiMenu.Setup(this);
@@ -63,7 +69,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (m_boardController != null) m_boardController.Update();
+        // if (m_boardController != null) m_boardController.Update();
     }
 
 

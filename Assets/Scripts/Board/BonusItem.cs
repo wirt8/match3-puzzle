@@ -41,6 +41,27 @@ public class BonusItem : Item
         return prefabname;
     }
 
+    protected override GameObject GetPrefabObject()
+    {
+        GameObject prefab = null;
+        switch (ItemType)
+        {
+            case eBonusType.NONE:
+                break;
+            case eBonusType.HORIZONTAL:
+                prefab = GameManager.GamePrefabs.PrefabBonusHorizontal;
+                break;
+            case eBonusType.VERTICAL:
+                prefab = GameManager.GamePrefabs.PrefabBonusVertical;
+                break;
+            case eBonusType.ALL:
+                prefab = GameManager.GamePrefabs.PrefabBonusBomb;
+                break;
+        }
+
+        return prefab;
+    }
+
     internal override bool IsSameType(Item other)
     {
         BonusItem it = other as BonusItem;

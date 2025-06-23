@@ -53,6 +53,37 @@ public class NormalItem : Item
         return prefabname;
     }
 
+    protected override GameObject GetPrefabObject()
+    {
+        GameObject prefab = null;
+        switch (ItemType)
+        {
+            case eNormalType.TYPE_ONE:
+                prefab = GameManager.GamePrefabs.PrefabsNormalItems[0];
+                break;
+            case eNormalType.TYPE_TWO:
+                prefab = GameManager.GamePrefabs.PrefabsNormalItems[1];
+                break;
+            case eNormalType.TYPE_THREE:
+                prefab = GameManager.GamePrefabs.PrefabsNormalItems[2];
+                break;
+            case eNormalType.TYPE_FOUR:
+                prefab = GameManager.GamePrefabs.PrefabsNormalItems[3];
+                break;
+            case eNormalType.TYPE_FIVE:
+                prefab = GameManager.GamePrefabs.PrefabsNormalItems[4];
+                break;
+            case eNormalType.TYPE_SIX:
+                prefab = GameManager.GamePrefabs.PrefabsNormalItems[5];
+                break;
+            case eNormalType.TYPE_SEVEN:
+                prefab = GameManager.GamePrefabs.PrefabsNormalItems[6];
+                break;
+        }
+
+        return prefab;
+    }
+
     internal override bool IsSameType(Item other)
     {
         NormalItem it = other as NormalItem;

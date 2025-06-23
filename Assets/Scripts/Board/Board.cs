@@ -25,6 +25,8 @@ public class Board
 
     private int m_matchMin;
 
+    private GameObject prefabBG;
+
     public Board(Transform transform, GameSettings gameSettings)
     {
         m_root = transform;
@@ -42,7 +44,8 @@ public class Board
     private void CreateBoard()
     {
         Vector3 origin = new Vector3(-boardSizeX * 0.5f + 0.5f, -boardSizeY * 0.5f + 0.5f, 0f);
-        GameObject prefabBG = Resources.Load<GameObject>(Constants.PREFAB_CELL_BACKGROUND);
+        // GameObject prefabBG = Resources.Load<GameObject>(Constants.PREFAB_CELL_BACKGROUND);
+        GameObject prefabBG = GameManager.GamePrefabs.PrefabBG;
         for (int x = 0; x < boardSizeX; x++)
         {
             for (int y = 0; y < boardSizeY; y++)
