@@ -35,6 +35,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private eLevelMode m_previousMode;
+
     private GameSettings m_gameSettings;
 
     [SerializeField]
@@ -89,6 +91,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadLevel(eLevelMode mode)
     {
+        m_previousMode = mode;
         m_boardController = new GameObject("BoardController").AddComponent<BoardController>();
         m_boardController.StartGame(this, m_gameSettings);
 
@@ -111,6 +114,11 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         StartCoroutine(WaitBoardController());
+    }
+
+    public void RestartLevel()
+    {
+        LoadLevel(m_previousMode);
     }
 
     internal void ClearLevel()
