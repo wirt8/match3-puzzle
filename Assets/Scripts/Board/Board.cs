@@ -141,6 +141,20 @@ public class Board
 
     internal void FillGapsWithNewItems()
     {
+        int normalTypeCount = Enum.GetNames(typeof(NormalItem.eNormalType)).Length;
+        int[] itemTypeCount = new int[normalTypeCount];
+        for (int x = 0; x < boardSizeX; x++)
+        {
+            for (int y = 0; y < boardSizeY; y++)
+            {
+                Cell cell = m_cells[x, y];
+                if (!cell.IsEmpty && cell.Item is NormalItem)
+                {
+                    itemTypeCount[(int)((NormalItem)cell.Item).ItemType]++;
+                }
+            }
+        }
+        
         for (int x = 0; x < boardSizeX; x++)
         {
             for (int y = 0; y < boardSizeY; y++)
@@ -150,7 +164,36 @@ public class Board
 
                 NormalItem item = new NormalItem();
 
-                item.SetType(Utils.GetRandomNormalType());
+                int selectedTypeId = -1;
+                for (int z = 0; z < normalTypeCount; z++)
+                {
+                    if (cell.NeighbourUp != null && cell.NeighbourUp.Item is NormalItem && (int)((NormalItem)cell.NeighbourUp.Item).ItemType == z) continue;
+                    if (cell.NeighbourRight != null && cell.NeighbourRight.Item is NormalItem && (int)((NormalItem)cell.NeighbourRight.Item).ItemType == z) continue;
+                    if (cell.NeighbourBottom != null && cell.NeighbourBottom.Item is NormalItem && (int)((NormalItem)cell.NeighbourBottom.Item).ItemType == z) continue;
+                    if (cell.NeighbourLeft != null && cell.NeighbourLeft.Item is NormalItem && (int)((NormalItem)cell.NeighbourLeft.Item).ItemType == z) continue;
+                    if (selectedTypeId == -1)
+                    {
+                        selectedTypeId = z;
+                        continue;
+                    }
+                    if (itemTypeCount[selectedTypeId] > itemTypeCount[z])
+                    {
+                        selectedTypeId = z;
+                    }
+                }
+                if (selectedTypeId == -1)
+                {
+                    NormalItem.eNormalType selectedType = Utils.GetRandomNormalType();
+                    item.SetType(selectedType);
+                    itemTypeCount[(int)selectedType]++;
+                }
+                else
+                {
+                    item.SetType((NormalItem.eNormalType)selectedTypeId);
+                    itemTypeCount[selectedTypeId]++;
+                }
+
+                // item.SetType(Utils.GetRandomNormalType());
                 item.SetView();
                 item.SetViewRoot(m_root);
 
